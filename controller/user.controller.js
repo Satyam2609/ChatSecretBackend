@@ -103,7 +103,8 @@ const loginUser = asyncHandler(async(req , res) => {
 
   const option = {
     httpOnly:true,
-    secure:true
+    secure:true,
+    sameSite: "None",
   }
   const loggedInuser = await User.findById(user._id).select("-password -refreshtoken")
 
@@ -135,7 +136,8 @@ const loggout = asyncHandler(async(req , res) => {
  const option = {
   httpOnly: true,
   secure: true,
-  path: "/"  // important
+  path: "/" , 
+  sameSite: "None",// important
 };
 
 
