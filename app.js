@@ -6,7 +6,7 @@ import router from './Router/user.router.js'
 const app = express()
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://chat-secret-frontend.vercel.app/",
     credentials: true // lowercase c
 }));
 app.use(express.json({limit:"10kb"}))
