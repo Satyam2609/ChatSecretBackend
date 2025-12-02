@@ -14,5 +14,5 @@ export const getUsername = asyncHandler(async (req, res) => {
         return res.status(401).json({ success: false, message: "Invalid or expired token" });
     }
 
-    return res.status(200).json({ success: true, username: decodedToken.username });
+    return res.status(200).json({ success: true, user:decodedToken});
 });
