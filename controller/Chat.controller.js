@@ -1,5 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
+import uploadCloudinary from "../utils/cloudinary.js";
 
 
 const UserProfile = asyncHandler(async(req , res) => {
@@ -22,4 +23,23 @@ const UserProfile = asyncHandler(async(req , res) => {
    })
 })
 
-export default UserProfile
+const updateProfile = asyncHandler(async(req , res) => {
+    const {username , name , phonenumber} = req.body
+
+const updateavatr = req.files?.avatar 
+const uploadavatar = await uploadCloudinary(updateavatr)
+    const updateUser = await User.findByIdAndUpdate(req.user.id ,{username , name , phonenumber , avatar:uploadavatar?.url} , {new:true})
+
+
+    res.status(200).json({
+        success:true,
+        message:"updated successsfully",
+        user:updateUser
+    })
+
+})
+
+export {
+    updateProfile,
+    UserProfile
+}
