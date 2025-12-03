@@ -26,13 +26,13 @@ const UserProfile = asyncHandler(async(req , res) => {
 const updateProfile = asyncHandler(async(req , res) => {
     const {username , name , phonenumber} = req.body
 
-
-    let avatardata
-
-if(req.files?.avatar){
-    avatardata = await uploadCloudinary(req.files.avatar)
+const upload = req.file?.path
+console.log(upload)
+let avatardata
+if(req.file){
+    avatardata = await uploadCloudinary(upload)
 }
-
+console.log(upload)
 
 const updatefeild = {
     username,
