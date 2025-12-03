@@ -12,6 +12,6 @@ router.route("/login").post(  loginUser)
 router.route("/username").get(getUsername)
 router.route("/loggout").post(verifyUser, loggout)
 router.route("/profile").get(verifyUser , UserProfile)
-router.route("/UpdateProfile").put(verifyUser , updateProfile)
+router.route("/UpdateProfile").put(verifyUser, updateProfile)
 
 export default router

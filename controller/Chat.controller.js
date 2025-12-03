@@ -26,9 +26,23 @@ const UserProfile = asyncHandler(async(req , res) => {
 const updateProfile = asyncHandler(async(req , res) => {
     const {username , name , phonenumber} = req.body
 
-const updateavatr = req.files?.avatar 
-const uploadavatar = await uploadCloudinary(updateavatr)
-    const updateUser = await User.findByIdAndUpdate(req.user.id ,{username , name , phonenumber , avatar:uploadavatar?.url} , {new:true})
+
+    let avatardata
+
+if(req.files?.avatar){
+    avatardata = await uploadCloudinary(req.files.avatar)
+}
+
+
+const updatefeild = {
+    username,
+    phonenumber,
+    name
+}
+if(avatardata?.url){
+    updatefeild.avatar = avatardata.url
+}
+    const updateUser = await User.findByIdAndUpdate(req.user.id ,updatefeild , {new:true})
 
 
     res.status(200).json({
