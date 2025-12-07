@@ -73,8 +73,27 @@ const userFetchRequest = asyncHandler(async(req,res) => {
     })
 })
 
+const userAcceptRequest = asyncHandler(async(req,res) => {
+    const {roomId , username , accept} = req.body
+    const group = await UserGroup.findOne({groupName:roomId})
+
+    if(accept === "yes"){
+        group.members.push(username)
+        await group.save()
+        await UserGroup.updateOne(
+                        {groupName:roomId},
+                        {$pull:{userRequest:{username:username}}}
+                    )
+    }
+
+    res.status(200).json({ success: true, message: "User accepted" });
+
+
+})
+
 export {
     updateProfile,
     UserProfile,
-    userFetchRequest
+    userFetchRequest,
+    userAcceptRequest
 }
