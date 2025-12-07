@@ -54,7 +54,6 @@ userSchema.methods.generateAccesstoken = function(){
         name:this.name,
         username:this.username,
         email:this.email,
-        password:this.password
     },
 
     process.env.JWT_ACCESS_SECRET,
@@ -68,6 +67,7 @@ userSchema.methods.generateRefreshtoken = function(){
         username:this.username,
         email:this.email,
         name:this.name
+        
     },
     process.env.JWT_Refresh_SECRET,
     {expiresIn:"10d"}

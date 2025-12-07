@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import uploadCloudinary from "../utils/cloudinary.js";
+import UserGroup from "../models/user.group.js";
 
 
 const UserProfile = asyncHandler(async(req , res) => {
@@ -53,7 +54,27 @@ if(avatardata?.url){
 
 })
 
+const userFetchRequest = asyncHandler(async(req,res) => {
+    const userName = req.user.username
+ 
+    const group = await UserGroup.find({creator:userName})
+
+    const userRequests = group.flatMap(g => g.userRequest || [])
+    if(userRequests.length === 0){
+        return res.status(401).json({
+            success:false,
+            message:"user have no requests"
+        })
+    }
+    return res.status(200).json({
+        success:true,
+        message:"userRequests",
+        request:userRequests
+    })
+})
+
 export {
     updateProfile,
-    UserProfile
+    UserProfile,
+    userFetchRequest
 }
