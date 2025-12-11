@@ -15,5 +15,5 @@ router.route("/profile").get(verifyUser , UserProfile)
 router.route("/UpdateProfile").put(upload.single("avatar"),verifyUser, updateProfile)
 router.route("/userFetchRequest").get(verifyUser , userFetchRequest)
 router.route("/userAcceptInGroup").post(userAcceptRequest)
-router.route("/ImageShare").post(upload.single("image") , UploadImage)
+router.route("/ImageShare").post(upload.single("image") , verifyUser,UploadImage)
 export default router
