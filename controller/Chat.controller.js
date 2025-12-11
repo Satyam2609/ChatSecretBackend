@@ -109,10 +109,9 @@ const UploadImage = asyncHandler(async(req , res) => {
                 message:"error in upload"
             })
         }
-        group.messages.push({
+        group.ImageSend.push({
             sender:req.user?.username,
-            message:"",
-            ImageSend:uploadsend.url
+            url:uploadsend.url
         })
         await group.save()
 
