@@ -91,9 +91,41 @@ const userAcceptRequest = asyncHandler(async(req,res) => {
 
 })
 
+const UploadImage = asyncHandler(async(req , res) => {
+    const {roomId} = req.body
+
+    const group = await UserGroup.findOne({groupName:roomId})
+    const file = req.file?.path
+    if(!file){
+        return res.status(400).json({
+            success:false,
+            message:"no file found"
+        })
+    }   
+        const uploadsend = await uploadCloudinary(file)
+        if(!uploadsend){
+            return res.status(500).json({
+                success:false,
+                message:"error in upload"
+            })
+        }
+        group.messages.push({
+            sender:req.user?.username,
+            message:"",
+            ImageSend:uploadsend.url
+        })
+        await group.save()
+
+        return res.status(200).json({
+            success:true,
+            message:"image sent successfully"
+
+        })
+})
 export {
     updateProfile,
     UserProfile,
     userFetchRequest,
-    userAcceptRequest
+    userAcceptRequest,
+    UploadImage
 }

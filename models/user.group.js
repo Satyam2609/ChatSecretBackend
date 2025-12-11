@@ -18,7 +18,14 @@ const userGroupSchema = new mongoose.Schema({
     type:[{
         sender:String,
         message:String,
-        timestamp:{type:Date, default:Date.now}
+        timestamp:{type:Date, default:Date.now},
+        replyMsg:{
+          username:String,
+          message:String
+        },
+        ImageSend:{
+          type:String,
+        }
     }],
     required:true,
     default:[]
