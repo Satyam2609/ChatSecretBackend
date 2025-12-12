@@ -109,16 +109,11 @@ const UploadImage = asyncHandler(async(req , res) => {
                 message:"error in upload"
             })
         }
-        group.messages.push({
-            sender:req.user.username,
-            message:"",
-            ImageSend:uploadsend.url
-        })
-        await group.save()
 
         return res.status(200).json({
             success:true,
-            message:"image sent successfully"
+            message:"image sent successfully",
+            imageUrl:uploadsend.url
         })
 })
 export {
