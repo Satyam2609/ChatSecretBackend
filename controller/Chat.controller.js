@@ -116,10 +116,28 @@ const UploadImage = asyncHandler(async(req , res) => {
             imageUrl:uploadsend.url
         })
 })
+
+const GroupSearch = asyncHandler(async(req , res) => {
+    const {searchGroup} = req.params
+    const groups = await UserGroup.find({groupName:{$regex:searchGroup , $options:"i"}})
+    console.log("search",groups)
+    if(groups.length === 0){
+        return res.status(401).json({
+            success:false,
+            message:"no group found"
+        })
+    }
+    return res.status(200).json({
+        success:true,
+        message:"groups found",
+        group:groups
+    })
+})
 export {
     updateProfile,
     UserProfile,
     userFetchRequest,
     userAcceptRequest,
-    UploadImage
+    UploadImage,
+    GroupSearch
 }
