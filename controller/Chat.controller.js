@@ -133,11 +133,45 @@ const GroupSearch = asyncHandler(async(req , res) => {
         group:groups
     })
 })
+const groupImageUpload = asyncHandler(async(req , res) => {
+    const {roomId} = req.body
+    console.log("roomId",roomId)
+
+    const group = await UserGroup.findOne({groupName:roomId})
+    const file  = req.file?.path
+    if(!file){
+        return res.status(400).json({
+            success:false,
+            message:"no file found"
+        })
+    }
+    const uploadsend = await uploadCloudinary(file)
+    if(!uploadsend){
+        return res.status(400).json({
+            success:false,
+            message:"url not found"
+        })
+    }
+    console.log("uploadsend",uploadsend.url)
+    group.groupAvatar = uploadsend.url          
+    await group.save()
+    const imageUrl = group.groupAvatar
+
+    return res.status(200).json({
+        success:true,
+        message:"image uploaded successfully",
+        groupImagePr:imageUrl
+    })
+})
+
+
+
 export {
     updateProfile,
     UserProfile,
     userFetchRequest,
     userAcceptRequest,
     UploadImage,
-    GroupSearch
+    GroupSearch,
+    groupImageUpload
 }

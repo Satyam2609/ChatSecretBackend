@@ -4,7 +4,7 @@ import { upload } from '../middleware/Multer.middleware.js';
 import { verifyUser} from '../middleware/auth.middleware.js';
 import { getUsername } from '../middleware/getusername.js';
 import { loggout } from '../controller/user.controller.js';
-import {UserProfile, updateProfile, userAcceptRequest, userFetchRequest ,UploadImage , GroupSearch} from '../controller/Chat.controller.js';
+import {UserProfile, updateProfile, userAcceptRequest, userFetchRequest ,UploadImage , GroupSearch, groupImageUpload} from '../controller/Chat.controller.js';
 const router = Router()
 
 router.route("/signUp").post(upload.single("avatar"), registerUser);
@@ -17,4 +17,5 @@ router.route("/userFetchRequest").get(verifyUser , userFetchRequest)
 router.route("/userAcceptInGroup").post(userAcceptRequest)
 router.route("/ImageShare").post(upload.single("image") , verifyUser,UploadImage)
 router.route("/Search/:searchGroup").get(verifyUser, GroupSearch)
+router.route("/GroupAvatar").post(upload.single("groupImage") ,groupImageUpload)
 export default router

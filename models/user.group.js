@@ -14,6 +14,10 @@ const userGroupSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  groupAvatar:{
+    type:String,
+    default:null
+  },
   messages:{
     type:[{
         sender:String,
